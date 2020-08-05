@@ -24,7 +24,7 @@ function TeacherItem() {
           <strong>R$ 30,00</strong>
         </p>
         <button type="button">
-          <img src={whatsappIcon} alt="Icone whatsapp" />
+          <img src={whatsappIcon} alt="Ícone whatsapp" />
           Entrar em contato
         </button>
       </footer>
