@@ -1,35 +1,55 @@
-import React from 'react';
+import React from "react";
 
-import whatsappIcon from '../../assets/images/icons/whatsapp.svg';
+import whatsAppIcon from "../../assets/images/icons/whatsapp.svg";
 
-import './style.css';
+import "./styles.css";
+import api from "../../services/api";
 
-function TeacherItem() {
+interface TeacherItemProps {
+  teacher: {
+    avatar: string;
+    bio: string;
+    cost: number;
+    id: number;
+    name: string;
+    subject: string;
+    user_id: number;
+    whatsapp: string;
+  };
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  function createNewConnection() {
+    api.post("connections", { user_id: teacher.id }).then((resp) => {});
+  }
+
   return (
     <article className="teacher-item">
       <header>
-        <img src="https://i.pinimg.com/564x/76/ba/a5/76baa516aacffac4c56e5cead2e18d78.jpg" alt="Foto perfil mario" />
+        <img src={teacher.avatar} alt="Imagem Perfil" />
         <div>
-          <strong>Mario</strong>
-          <span>Nintendo</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
-      <p>
-        Encanador e nas horas vagas salvador de princesas e mundo, este sou eu super Mario <br /> Que te comeu atras do
-        super armário
-      </p>
+      <p>{teacher.bio}</p>
       <footer>
         <p>
           Preço/hora
-          <strong>R$ 30,00</strong>
+          <strong>R$ {teacher.cost}</strong>
         </p>
-        <button type="button">
-          <img src={whatsappIcon} alt="Ícone whatsapp" />
+        <a
+          // eslint-disable-next-line react/jsx-no-target-blank
+          target="_blank"
+          href={"https://wa.me/+55" + teacher.whatsapp.replace(" ", "")}
+          onClick={createNewConnection}
+        >
+          <img src={whatsAppIcon} alt="WhatsApp" />
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   );
-}
+};
 
 export default TeacherItem;
